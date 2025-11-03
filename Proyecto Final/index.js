@@ -1,5 +1,6 @@
 import express from 'express';
 import notFound from './src/middlewares/notFound.js';
+import productsRouter from './src/routes/products.router.js';
 
 const app = express();
 const PORT = 3000;
@@ -14,6 +15,8 @@ app.use((req, res, next) => {
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });
+
+app.use('/api', productsRouter)
 
 app.use(notFound);
 
