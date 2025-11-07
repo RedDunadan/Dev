@@ -1,5 +1,5 @@
 import { db } from './firebase.js';
-import { collection, getDocs, doc, getDoc } from 'firebase/firestore';
+import { collection, getDocs, doc, getDoc, addDoc, deleteDoc } from 'firebase/firestore';
 
 const productsCollection = collection(db, 'products');
 
@@ -9,7 +9,6 @@ export const getAllProducts = async () => {
         return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     } catch (error) {
         console.error("Error getting products: ", error);
-        return [];
     }
 };
 
@@ -21,4 +20,28 @@ export const getProductById = async (id) => {
     } catch (error) {
         console.error(error)
     }
-} 
+}
+export const createProduct = async (data) => {
+    try {
+        const newDocRef = await addDoc(productsCollection, data);
+        return { id: newDocRef.id, ...data };
+    } catch (error) {
+        console.error("Error creating product: ", error);
+    }
+
+}
+
+export const deleteProduct = async (id) => {
+    try {
+        const productRef = doc(productsCollection, id);
+        const snapshot = await getDoc(productRef);
+        
+        if (!snapshot.exists()) {
+            return false;
+        }
+        await deleteDoc(productRef);
+        return true;
+    } catch (error) {
+        console.error(error);
+    }   
+}

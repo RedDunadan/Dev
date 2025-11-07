@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express from 'express';
 import notFound from './src/middlewares/notFound.js';
 import productsRouter from './src/routes/products.router.js';
@@ -5,7 +6,10 @@ import cors from 'cors';
 
 
 const app = express();
-const PORT = 3000;
+
+app.use(express.json());
+
+const PORT = process.env.PORT || 3003;
 
 app.use(cors());
 app.use(express.json());
