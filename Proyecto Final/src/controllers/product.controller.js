@@ -75,6 +75,8 @@ export const createProduct = async (req, res) => {
     }
 }
 
+
+
 export const deleteProduct = async (req, res) => {
     const { id } = req.params;
     const deleted = await Model.deleteProduct(id); 

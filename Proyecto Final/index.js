@@ -3,6 +3,7 @@ import express from 'express';
 import notFound from './src/middlewares/notFound.js';
 import productsRouter from './src/routes/products.router.js';
 import cors from 'cors';
+import authRouter from './src/routes/auth.router.js';
 
 
 const app = express();
@@ -12,7 +13,6 @@ app.use(express.json());
 const PORT = process.env.PORT || 3003;
 
 app.use(cors());
-app.use(express.json());
 
 app.use((req, res, next) => {
     console.log(req.method, req.url);
@@ -22,6 +22,8 @@ app.use((req, res, next) => {
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });
+
+app.use('/api/auth', authRouter);
 
 app.use('/api', productsRouter)
 
