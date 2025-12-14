@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import express from 'express';
-import notFound from './Proyecto Final/src/middlewares/notFound.js';
+import notFound from './src/middlewares/notFound.js';
 import productsRouter from './src/routes/products.router.js';
 import cors from 'cors';
 import authRouter from './src/routes/auth.router.js';
