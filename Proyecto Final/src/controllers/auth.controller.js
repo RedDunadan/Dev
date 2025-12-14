@@ -1,20 +1,19 @@
-import bcrypt from 'bcrypt';
-import { createUser } from '../models/User.model.js';
+import 'dotenv/config';
+import { generateToken } from '../utils/token.generator.js';
 
-export const register = async (req, res) => {
-    const { email, password } = req.body;
-
-    if (!email || !password) {
-        return res.status(422).json({ error: 'Email and password are required' });
-    }
-
-    const passwordHash = await bcrypt.hash(password, 10);
-
-    const user = createUser({ email, passwordHash });
-
-    if (!user) {
-        return res.status(503).json({ error: 'Error creating user' });
-    }
-
-    res.send('User registered successfully');
+const default_user = {
+    id: 1,
+    email: 'x@x.com',
+    password: '1234'
 }
+
+export const login = (req, res) => {
+    const { email, password } = req.body;
+    if (email === default_user.email && password === default_user.password) {
+        const token = generateToken(default_user);
+        res.json({ token });
+    } else {
+        res.sendStatus(401);
+    }
+}
+
